@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elevate Academy | Coaching Center</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050711;
+      --surface: #0f172a;
+      --surface-soft: rgba(15, 23, 42, 0.84);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #60a5fa;
+      --accent-2: #38bdf8;
+      --shadow: 0 24px 90px rgba(15, 23, 42, 0.24);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.14), transparent 25%),
+                  radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.14), transparent 18%),
+                  linear-gradient(180deg, #01040d 0%, #050711 58%, #071023 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      width: min(1200px, 100% - 32px);
+      margin: 0 auto;
+      padding: 32px 0 64px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    nav {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+      padding: 64px 0;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.75rem, 5vw, 4.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      max-width: 12ch;
+    }
+
+    .hero-copy p {
+      margin-top: 24px;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .button,
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 15px 26px;
+      font-weight: 600;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+      text-decoration: none;
+    }
+
+    .button {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      box-shadow: 0 18px 45px rgba(56, 189, 248, 0.22);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 50px rgba(56, 189, 248, 0.28);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      color: var(--text);
+    }
+
+    .hero-visual {
+      min-height: 520px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      perspective: 1200px;
+    }
+
+    .scene {
+      width: 100%;
+      max-width: 520px;
+      aspect-ratio: 1/1;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .card {
+      position: absolute;
+      inset: 0;
+      border-radius: 38px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.65));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      transform: translateZ(0px) rotateY(-14deg) rotateX(8deg);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.24), transparent 35%),
+                  radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.22), transparent 30%);
+      pointer-events: none;
+    }
+
+    .card-content {
+      position: absolute;
+      inset: 24px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      background: rgba(96, 165, 250, 0.16);
+      color: #dbeafe;
+      width: fit-content;
+      backdrop-filter: blur(10px);
+    }
+
+    .badge::before {
+      content: "★";
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .card-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .detail-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      padding: 12px 15px;
+      border-radius: 18px;
+    }
+
+    .graph {
+      position: absolute;
+      left: 50%;
+      bottom: 28px;
+      width: 86%;
+      height: 120px;
+      transform: translateX(-50%);
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .graph span {
+      display: block;
+      width: 100%;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(96, 165, 250, 0.88), rgba(56, 189, 248, 0.2));
+      animation: rise 1.8s ease forwards;
+      transform: translateY(100%);
+    }
+
+    .graph span:nth-child(1) { height: 64%; animation-delay: 0.1s; }
+    .graph span:nth-child(2) { height: 84%; animation-delay: 0.2s; }
+    .graph span:nth-child(3) { height: 72%; animation-delay: 0.3s; }
+    .graph span:nth-child(4) { height: 58%; animation-delay: 0.4s; }
+    .graph span:nth-child(5) { height: 92%; animation-delay: 0.5s; }
+
+    .section {
+      padding: 64px 0;
+    }
+
+    .section-title {
+      max-width: 720px;
+      margin-bottom: 28px;
+      color: var(--text);
+      font-size: clamp(1.85rem, 3vw, 2.75rem);
+      line-height: 1.05;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .features {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .feature-card,
+    .course-card,
+    .testimonial-card,
+    .stats-card {
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 28px;
+      padding: 28px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .feature-card:hover,
+    .course-card:hover,
+    .testimonial-card:hover,
+    .stats-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.22);
+    }
+
+    .feature-card h3,
+    .course-card h3,
+    .testimonial-card h3,
+    .stats-card h3 {
+      margin-bottom: 16px;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p,
+    .course-card p,
+    .testimonial-card p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .course-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .testimonial-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: "“";
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      font-size: 5rem;
+      color: rgba(96, 165, 250, 0.12);
+    }
+
+    .testimonial-card p {
+      margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stats-card span {
+      display: block;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .cta-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 24px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(99, 102, 241, 0.12));
+      border: 1px solid rgba(96, 165, 250, 0.18);
+      padding: 36px 36px;
+    }
+
+    .footer {
+      margin-top: 12px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(148, 163, 184, 0.12);
+      color: var(--muted);
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotateY(-14deg) rotateX(8deg); }
+      50% { transform: translateY(-16px) rotateY(-15deg) rotateX(10deg); }
+    }
+
+    @keyframes rise {
+      to { transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 450px;
+      }
+
+      .cta-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100%, 100% - 24px);
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        gap: 16px;
+      }
+      .hero-copy h1 {
+        font-size: 2.8rem;
+      }
+      .hero-visual {
+        min-height: 360px;
+      }
+      .graph {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">Elevate Academy</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#programs">Programs</a>
+        <a href="#success">Success</a>
+        <a href="#join">Join</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p style="color: var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:0.2em;">Premium Coaching</p>
+        <h1>3D Learning Experiences for Tomorrow's Leaders</h1>
+        <p>Guide every student with immersive mentorship, live strategy sessions, and performance coaching designed for top exam success and personal growth.</p>
+        <div class="hero-actions">
+          <a class="button" href="#join">Book a Consultation</a>
+          <a class="button-secondary" href="#programs">Explore Programs</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="scene" role="img" aria-label="3D coaching dashboard preview">
+          <div class="card">
+            <div class="card-content">
+              <span class="badge">Student Growth</span>
+              <div>
+                <p class="card-title">Live progress analytics with mentoring insights</p>
+              </div>
+              <div class="card-details">
+                <span class="detail-pill">Weekly Masterclasses</span>
+                <span class="detail-pill">1-on-1 Coaching</span>
+              </div>
+            </div>
+            <div class="graph">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-title">Transform your coaching center into a professional success engine.</div>
+      <div class="grid features">
+        <article class="feature-card">
+          <h3>Immersive 3D Branding</h3>
+          <p>Showcase your academy with a modern, premium design that reflects trust, excellence, and innovation.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Student-Centered Growth</h3>
+          <p>Focus on individual achievement with clear learning paths, progress metrics, and motivational achievements.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Flexible Learning Paths</h3>
+          <p>Create coaching programs for competitive exams, professional skills, and college readiness — all in one polished layout.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="programs" class="section">
+      <div class="section-title">Programs built for higher scores and stronger confidence.</div>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;">
+        <article class="course-card">
+          <div>
+            <h3>Exam Excellence</h3>
+            <p>Focused coaching with mock tests, analytics, and strategy sessions to accelerate top-rank performance.</p>
+          </div>
+          <div class="course-meta">
+            <span>12 weeks</span>
+            <span>Live Workshops</span>
+          </div>
+        </article>
+        <article class="course-card">
+          <div>
+            <h3>Leadership Bootcamp</h3>
+            <p>Develop communication, decision-making, and study habits that create confident future leaders.</p>
+          </div>
+          <div class="course-meta">
+            <span>8 sessions</span>
+            <span>Mentor Access</span>
+          </div>
+        </article>
+        <article class="course-card">
+          <div>
+            <h3>Career Prep</h3>
+            <p>Coaching for career planning, competitive entrance counseling, and interview readiness.</p>
+          </div>
+          <div class="course-meta">
+            <span>Personalized</span>
+            <span>Goal Tracking</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="success" class="section">
+      <div class="section-title">Proven results with modern coaching design.</div>
+      <div class="grid stats-grid">
+        <article class="stats-card">
+          <span>95%</span>
+          <p>Course completion rate by students within the first semester.</p>
+        </article>
+        <article class="stats-card">
+          <span>4.9/5</span>
+          <p>Average mentor satisfaction rating from coaching sessions.</p>
+        </article>
+        <article class="stats-card">
+          <span>+220</span>
+          <p>Students placed in top programs and institutions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch;">
+        <article class="testimonial-card">
+          <h3>What students say</h3>
+          <p>�Elevate Academy�s coaching helped me stay focused, improve my grades fast, and gain confidence with each session. The progress dashboard made tracking success easier than ever.�</p>
+          <div class="testimonial-author">
+            <span class="author-avatar">A</span>
+            <div>
+              <strong>Aarav Patel</strong>
+              <div>JEE Advanced Aspirant</div>
+            </div>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <h3>What parents trust</h3>
+          <p>�The personalized mentorship and regular updates made a huge difference for our child�s exam preparation. The coaching team kept every session engaging and results-focused.�</p>
+          <div class="testimonial-author">
+            <span class="author-avatar">M</span>
+            <div>
+              <strong>Meera Sharma</strong>
+              <div>Proud Parent</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="join" class="section">
+      <div class="cta-card">
+        <div>
+          <h3 style="font-size: 1.9rem; margin-bottom: 12px;">Ready to elevate your coaching center?</h3>
+          <p style="color: var(--muted); max-width: 620px;">Create a captivating landing page for admissions, courses, and student success stories � all with a premium, animated aesthetic.</p>
+        </div>
+        <a class="button" href="mailto:contact@elevateacademy.com">Start Enrollment</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>� 2026 Elevate Academy. Designed for coaching excellence.</span>
+      <span>contact@elevateacademy.com</span>
+    </footer>
+  </div>
+</body>
+</html>
